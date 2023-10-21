@@ -131,7 +131,166 @@ https://developer.mozilla.org/zh-CN/docs/Learn/Common_questions/Tools_and_setup/
 * ```<article> ```包围的内容即一篇文章，与页面其他部分无关（比如一篇博文）。
 
 
+# CSS
+
+关联css文件：
+```
+<link rel="stylesheet" href="styles.css" />
+
+```
+根据元素位置确定样式：
+```
+li em {
+  color: rebeccapurple;
+}
+
+```
+根据状态确定样式：
+```
+a:link {
+  color: pink;
+}
+
+a:visited {
+  color: green;
+}
+
+```
+
+选择器：
+```
+h1
+a:link
+.manythings
+#onething
+*
+.box p
+.box p:first-child
+h1, h2, .intro
+
+
+```
+
+
+CSS 语言有一些规则来控制在发生冲突的情况下哪个选择器更强大。这些规则被称为层叠（cascade）和优先级（specificity）。在下面的代码块中，我们为 p 选择器定义了两条规则，但段落文本将是蓝色的。这是因为将段落文本设置为蓝色的声明在样式表的后面出现。后面的样式会替换样式表中较早出现的冲突样式。这就是层叠规则。
+
+
+## css如何运行
+
+浏览如何加载网页：
+<img src="https://developer.mozilla.org/zh-CN/docs/Learn/CSS/First_steps/How_CSS_works/rendering.svg">
+
+## 选择器种类
+
+类型、类和ID选择器
+```
+h1 {
+}
+
+.box {
+}
+
+#unique {
+}
+
+
+```
+
+标签属性选择器：
+```
+a[title] {
+}
+
+a[href="https://example.com"]
+{
+}
+
+
+```
+伪类和伪元素：
+```
+a:hover {
+}
+
+
+```
+
+运算符：
+```
+article > p {
+}
+```
+
+## 层叠与继承
+CSS 代表层叠样式表（Cascading Style Sheets），理解第一个词层叠（cascade）很重要——层叠的表现方式是理解 CSS 的关键。
+
+在某些时候，在做一个项目过程中你会发现一些应该产生效果的样式没有生效。通常的原因是你创建了两个应用于同一个元素的规则。与层叠密切相关的概念是优先级（specificity），决定在发生冲突的时候应该使用哪条规则。
+
+### 层叠
+当应用两条同级别的规则到一个元素的时候，写在后面的就是实际使用的规则。
+
+优先级：
+浏览器是根据优先级来决定当多个规则有不同选择器对应相同的元素的时候需要使用哪个规则。它基本上是一个衡量选择器具体选择哪些区域的尺度：
+* 一个元素选择器不是很具体，则会选择页面上该类型的所有元素，所以它的优先级就会低一些。
+* 一个类选择器稍微具体点，则会选择该页面中有特定 class 属性值的元素，所以它的优先级就要高一点。
+
+
+### 继承
+继承也需要在上下文中去理解——一些设置在父元素上的 CSS 属性是可以被子元素继承的，有些则不能。
+
+## 盒模型
+在 CSS 中我们广泛地使用两种“盒子” —— 块级盒子 (block box) 和 内联盒子 (inline box)。
+
+<img src="https://developer.mozilla.org/zh-CN/docs/Learn/CSS/Building_blocks/The_box_model/box-model-devtools.png">
+
+## CSS布局
+
+正常布局流：
+正常布局流（normal flow）是指在不对页面进行任何布局控制时，浏览器默认的 HTML 布局方式。
+
+弹性盒子：
+Flexbox 是 CSS 弹性盒子布局模块（Flexible Box Layout Module）的缩写，它被专门设计出来用于创建横向或是纵向的一维页面布局。
+
+
+Grid布局：
+Flexbox 用于设计横向或纵向的布局，而 Grid 布局则被设计用于同时在两个维度上把元素按行和列排列整齐。
+
+
+
+浮动：
+把一个元素“浮动”(float) 起来，会改变该元素本身和在正常布局流（normal flow）中跟随它的其他元素的行为。这一元素会浮动到左侧或右侧，并且从正常布局流 (normal flow) 中移除，这时候其他的周围内容就会在这个被设置浮动 (float) 的元素周围环绕。
+
+
+定位技术：
+定位 (positioning) 能够让我们把一个元素从它原本在正常布局流 (normal flow) 中应该在的位置移动到另一个位置。定位 (positioning) 并不是一种用来给你做主要页面布局的方式，它更像是让你去管理和微调页面中的一个特殊项的位置。
+
+相对定位：相对定位 (relative positioning) 让你能够把一个正常布局流 (normal flow) 中的元素从它的默认位置按坐标进行相对移动。
+
+绝对定位：绝对定位用于将元素移出正常布局流 (normal flow)，以坐标的形式相对于它的容器定位到 web 页面的任何位置，以创建复杂的布局。有趣的是，它经常被用于与相对定位和浮动的协同工作。
+
+固定定位：固定定位 (fixed positioning) 同绝对定位 (absolute positioning) 一样，将元素从文档流 (document flow) 当中移出了。但是，定位的坐标不会应用于"容器"边框来计算元素的位置，而是会应用于视口 (viewport) 边框。
+
+
+粘性定位：粘性定位 (sticky positioning) 是最后一种我们能够使用的定位方式。它将默认的静态定位 (static positioning) 和固定定位 (fixed positioning) 相混合。当一个元素被指定了position: sticky时，它会在正常布局流中滚动，直到它出现在了我们给它设定的相对于容器的位置，这时候它就会停止随滚动移动，就像它被应用了position: fixed一样。
+
+
+表格布局：
+一个<table>标签之所以能够像表格那样展示，是由于 css 默认给<table>标签设置了一组 table 布局属性。当这些属性被应用于排列非<table>元素时，这种用法被称为“使用 CSS 表格”。
+
+多列布局：
+多列布局模组给了我们 一种把内容按列排序的方式，就像文本在报纸上排列那样。由于在 web 内容里让你的用户在一个列上通过上下滚动来阅读两篇相关的文本是一种非常低效的方式，那么把内容排列成多列可能是一种有用的技术。
+要把一个块转变成多列容器 (multicol container)，我们可以使用 column-count属性来告诉浏览器我们需要多少列，也可以使用column-width (en-US)来告诉浏览器以至少某个宽度的尽可能多的列来填充容器。
+
+
+### 响应式设计：
+随着人们使用的屏幕尺寸的种类越来越多，出现了响应式网页设计的概念（responsive web design，RWD），RWD 指的是允许 Web 页面适应不同屏幕宽度因素等，进行布局和外观的调整的一系列实践。
+
+
+
+
 # JavaScript
+
+
 
 ## 异步JavaScript
 异步编程技术使你的程序可以执行一个长期运行的任务的同时继续对其他事件做出反应而不必等待任务完成。
@@ -140,6 +299,10 @@ https://developer.mozilla.org/zh-CN/docs/Learn/Common_questions/Tools_and_setup/
 * 使用fetch()发起HTTP请求
 * 使用getuserMedia()访问用户的摄像头和麦克风
 * 使用showOpenFilePicker()请求用户选择文件以供访问
+
+回调：
+事件处理程序是一种特殊类型的回调函数。而回调函数则是一个被传递到另一个函数中的会在适当的时候被调用的函数。
+
 
 ### 如何使用Promise
 Promise是现代Javascript中异步编程的基础，是一个由异步函数返回的可以向我们指示当前操作所处状态的对象。在Promise返回给调用者的时候，操作往往还没有完成，但Promise对象可以让我们操作最终完成的时候对其进行处理。
@@ -161,6 +324,8 @@ async关键字提供了一种更简单的方法来处理基于异步Promise的�
 * 文档是加载到窗口的实际页面。
 
 
+
+
 # 理解客户端web端开发工具
 
 ## 客户端工具概述
@@ -174,3 +339,51 @@ async关键字提供了一种更简单的方法来处理基于异步Promise的�
 
 
 # 服务器端网站编程
+```
+npm WARN deprecated core-js@2.6.12: core-js@<3.23.3 is no longer maintained and not recommended for usage
+due to the number of issues. 
+Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x 
+even if nothing is polyfilled. Some versions have web compatibility issues. 
+Please, upgrade your dependencies to the actual version of core-js.
+
+
+使用以下方法解决
+npm update -g  <package_name>  // 直接升级出现警示的那个依赖包
+
+```
+
+
+
+
+# Vue
+
+```
+初始化项目
+vue  create <name> --packageManager=npm
+运行：
+npm run serve
+
+```
+
+
+vue的项目结构：
+* package.json：该文件包含项目的依赖项列表，以及一些元数据和 eslint 配置。
+* yarn.lock：如果你选择 yarn 作为你的包管理器，将生成此文件，其中包含项目所需的所有依赖项和子依赖项的列表。
+* babel.config.js：这个是 Babel 的配置文件，可以在开发中使用 JavaScript 的新特性，并且将其转换为在生产环境中可以跨浏览器运行的旧语法代码。你也可以在这个里配置额外的 babel 插件。
+* jsconfig.json：这是一份用于 Visual Studio Code 的配置文件，它为 VS Code 提供了关于项目结构的上下文信息，并帮助自动完成。
+* public：这个目录包含一些在 Webpack 编译过程中没有加工处理过的文件（有一个例外：index.html 会有一些处理）。
+  * favicon.ico：这个是项目的图标，当前就是一个 Vue 的 logo。
+  * index.html：这是应用的模板文件，Vue 应用会通过这个 HTML 页面来运行，也可以通过 lodash 这种模板语法在这个文件里插值。
+
+* src：这个是 Vue 应用的核心代码目录
+  * main.js：这是应用的入口文件。目前它会初始化 Vue 应用并且制定将应用挂载到 index.html 文件中的哪个 HTML 元素上。通常还会做一些注册全局组件或者添额外的 Vue 库的操作。
+  * App.vue：这是 Vue 应用的根节点组件，往下看可以了解更多关注 Vue 组件的信息。
+  * components：这是用来存放自定义组件的目录，目前里面会有一个示例组件。
+  * assets：这个目录用来存放像 CSS、图片这种静态资源，但是因为它们属于代码目录下，所以可以用 webpack 来操作和处理。意思就是你可以使用一些预处理比如 Sass/SCSS 或者 Stylus。
+
+
+## App.vue
+<template> 包含了所有的标记结构和组件的展示逻辑。
+
+script:包含组件中所有的非显示逻辑，最重要的是，script 标签需要默认导出一个 JS 对象。该对象是你在本地注册组件、定义属性、处理本地状态、定义方法等的地方。在构建阶段这个包含 template 模板的对象会被处理和转换成为一个有 render() 函数的 Vue 组件
+
